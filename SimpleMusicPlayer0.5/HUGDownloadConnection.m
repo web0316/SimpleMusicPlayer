@@ -67,7 +67,7 @@
     NSArray *myPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *myDocPath = [myPaths objectAtIndex:0];
     [self.fileManager changeCurrentDirectoryPath:myDocPath];
-    NSLog(@"%@",myDocPath);
+
     
     // 判断链接是否成功
     

@@ -106,8 +106,8 @@ BOOL FLAG = YES;
     _secondVC = [[HUGOtherListViewController alloc] init];
   //  _secondTitle = [_secondVC currentTableViewTitle];
 _secondTitle = [HUGOtherListViewController getoldtitlevalue];
-    NSLog(@"%@",_secondTitle);
-    int i,j;
+ 
+    
   
     
     self.allMusicArray=[[NSMutableArray alloc]init];
@@ -117,58 +117,34 @@ _secondTitle = [HUGOtherListViewController getoldtitlevalue];
     
     self.musicArray = [[NSMutableArray alloc] init];
     self.musicArray = [HUGDataBase readSongNameFromPlayList:_secondTitle];
-    int count2 =self.allMusicArray.count;
-    
-    
-    
-    int count1=self.musicArray.count;
    
+    NSMutableArray *tempdel = [[NSMutableArray alloc]init];
+       [_allMusicArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop)
+    {
+
+        for(int i=0; i<_musicArray.count;i++)
+        {
+            
+            if([obj isEqualToString:[_musicArray objectAtIndex:i]])
+                [tempdel addObject:obj];
         
-        for (i=0; i<count2; i++) {
-            
-            
-            for (j=0; j<count1; j++) {
-               
-                if([[self.allMusicArray objectAtIndex:i] isEqualToString:@""])break;
-                else
-                
-                           
-                               if ([[self.allMusicArray objectAtIndex:i] isEqualToString: [self.musicArray objectAtIndex:j]])
-                               
-                               {
-                
-                           
-                                       
-                                       NSLog(@"%@",[self.allMusicArray objectAtIndex:i]);
-                                   
-                                   if([[self.allMusicArray objectAtIndex:i] isEqualToString:@""])
-                                       ;
-                                   
-                                   
-                                   else [self.allMusicArray removeObjectAtIndex:i];
-                                   
-                                   
-                                   
-                     
-                               }
-            
-            
-            
-             
-                 
-                    
-                 
-                    
-                     
-                     
-        
-                
-                
-            
         }
+       
         
-   }
- 
+    }
+        ];
+    
+        
+        
+    
+    for (int j=0; j<tempdel.count; j++)
+    {
+        [_allMusicArray removeObject:[tempdel objectAtIndex:j]];
+        
+    }
+
+    
+    [tempdel removeAllObjects]; //其实这句没什么用
     
     
     
@@ -178,7 +154,12 @@ _secondTitle = [HUGOtherListViewController getoldtitlevalue];
     //数据库，加载名称为"临时所有歌曲"播放列表到_tempmusicarray
 
     
- }
+}
+
+-(void)fuck
+{
+   
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -196,17 +177,11 @@ _secondTitle = [HUGOtherListViewController getoldtitlevalue];
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     
-    [_allMusicArray count]?[[[_allMusicArray objectAtIndex:section] objectForKey:@"subs"] count]:0;
-     [_tempMusicArray count]?[[[_tempMusicArray objectAtIndex:section] objectForKey:@"subs"] count]:0;
-   [_musicArray count]?[[[_musicArray objectAtIndex:section] objectForKey:@"subs"] count]:0;
+    
+    
     return [self.tempMusicArray count];
 }
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-   return  [_allMusicArray count]?[[[[_allMusicArray objectAtIndex:section] objectForKey:@"subs"] objectAtIndex:0] objectForKey:@"section"]:@"";
 
-  
-}
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {

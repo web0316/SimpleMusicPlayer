@@ -159,7 +159,7 @@
     
     _playListArray = [HUGDataBase readPlayListName];
     
-    NSLog(@"%i",_playListArray.count);
+
     
     //    for (int i = 0; i < _playListArray.count - 1; i++) {
     //        NSLog(@"%@",[_playListArray objectAtIndex:i]);
@@ -201,7 +201,7 @@
     }
     
     for (int i = 0; i < _songFileNames.count; i++) {
-        NSLog(@"%@",[_songFileNames objectAtIndex:i]);
+  
     }
 }
 
@@ -318,7 +318,7 @@
     
     
     if (_currentRow < _currentArray.count - 1 && _currentTableView.frame.size.height > 0) {
-        NSLog(@"down row %li",(long)_currentRow);
+     
         
         _currentRow++;
         _currentIndexPath = [NSIndexPath indexPathForRow:_currentRow inSection:0];
@@ -334,7 +334,7 @@
     
     if (_currentRow > 0 && _currentTableView.frame.size.height > 0) {
         
-        NSLog(@"%li",(long)_currentRow);
+  
         _currentRow--;
         _currentIndexPath = [NSIndexPath indexPathForRow:_currentRow inSection:0];
         [_currentTableView selectRowAtIndexPath:_currentIndexPath animated:YES scrollPosition:UITableViewScrollPositionBottom];
@@ -452,7 +452,6 @@
         }
         
         _songIndex = (int)_currentRow;
-        NSLog(@"songindex:%i",_songIndex);
         
         [self loadMusic:_tempPlayList songName:[_songListArray objectAtIndex:_songIndex] type:@"mp3"];
         
