@@ -22,7 +22,8 @@
         
         // 设置下载进度条
         
-        self.progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(50, viewController.view.frame.size.height - 45, 160, 10)];
+        self.progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(50, viewController.view.frame.size.height - 145, 160, 10)];
+        
         [self.progressView setProgressViewStyle:UIProgressViewStyleDefault];
         self.progressView.progressTintColor = [UIColor colorWithRed:0.4 green:0.4 blue:1.0 alpha:1.0];
         self.progressView.backgroundColor = [UIColor blackColor];
