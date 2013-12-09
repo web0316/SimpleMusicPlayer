@@ -36,22 +36,24 @@ BOOL FLAG = YES;
     //    NSMutableArray* newmusicarray=[[NSMutableArray alloc] init];
     
    
-    for (int i = 0; i<[self.tempMusicArray count]; i++) {
-        NSIndexPath *index = [NSIndexPath indexPathForRow:i inSection:0];
-        UITableViewCell *cell =  [self.tempMusicV cellForRowAtIndexPath:index];
-       
+  
+    for (int i=0; i<_addMusicArray.count; i++) {
         
-        if (cell.accessoryType==UITableViewCellAccessoryCheckmark) {
-            [_tempMusicArray addObject:cell.textLabel.text];
+        [HUGDataBase addSongToPlayList:[_addMusicArray objectAtIndex:i] Playlist:str filepath:[HUGDataBase readPathOfSongFromPlayList:@"所有歌曲" songName:[_addMusicArray objectAtIndex:i]]];
+        
+        
+    }
+    
+    
            
             
-            [HUGDataBase addSongToPlayList:cell.textLabel.text Playlist:str filepath:[HUGDataBase readPathOfSongFromPlayList:@"所有歌曲" songName:cell.textLabel.text]];
+    
              
              
             
             // [HUGDataBase addSongToPlayList:str songName:cell.textLabel.text];
-        }
-    }
+    
+    
     
     //数据库，存储newmusicarray,名称为str
     
@@ -104,12 +106,8 @@ BOOL FLAG = YES;
     [self.view addSubview:confirm];
     
     _secondVC = [[HUGOtherListViewController alloc] init];
-  //  _secondTitle = [_secondVC currentTableViewTitle];
-_secondTitle = [HUGOtherListViewController getoldtitlevalue];
- 
-    
-  
-    
+    _secondTitle = [HUGOtherListViewController getoldtitlevalue];
+    self.addMusicArray = [[NSMutableArray alloc]init];
     self.allMusicArray=[[NSMutableArray alloc]init];
     
     //数据库，加载"所有"列表到allmusicarray
@@ -124,6 +122,7 @@ _secondTitle = [HUGOtherListViewController getoldtitlevalue];
 
         for(int i=0; i<_musicArray.count;i++)
         {
+            
             
             if([obj isEqualToString:[_musicArray objectAtIndex:i]])
                 [tempdel addObject:obj];
@@ -149,17 +148,14 @@ _secondTitle = [HUGOtherListViewController getoldtitlevalue];
     
     
     self.tempMusicArray = [NSMutableArray arrayWithArray:self.allMusicArray];
-    //[self.tempMusicV reloadData];
+ 
     
     //数据库，加载名称为"临时所有歌曲"播放列表到_tempmusicarray
 
     
 }
 
--(void)fuck
-{
-   
-}
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -185,27 +181,51 @@ _secondTitle = [HUGOtherListViewController getoldtitlevalue];
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString* tablestring=@"cell";
-    [self.tempMusicV registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
-    UITableViewCell* tablecell=[self.tempMusicV dequeueReusableCellWithIdentifier:tablestring forIndexPath:indexPath];
-    tablecell.textLabel.text=[self.tempMusicArray objectAtIndex:[indexPath row]];
-    [tablecell.textLabel setFont:[UIFont fontWithName:@"MingLiU/PMingLiU" size:18]];
-    tablecell.textLabel.textColor = [UIColor colorWithRed:0.4 green:0.4 blue:1 alpha:1];
-    return tablecell;
+     NSString* tablestring=[NSString stringWithFormat:@"cell%d%d",[indexPath section],[indexPath row]];
+    
+    
+    
+    [self.tempMusicV registerClass:[UITableViewCell class] forCellReuseIdentifier:[NSString stringWithFormat:@"cell%d%d",[indexPath section],[indexPath row]]];
+  
+    
+    
+   
+  UITableViewCell *_talbecell=[self.tempMusicV dequeueReusableCellWithIdentifier:tablestring forIndexPath:indexPath];
+   if(_talbecell==nil)
+       _talbecell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tablestring];
+    
+    
+    _talbecell.textLabel.text=[self.tempMusicArray objectAtIndex:[indexPath row]];
+    [_talbecell.textLabel setFont:[UIFont fontWithName:@"MingLiU/PMingLiU" size:18]];
+    _talbecell.textLabel.textColor = [UIColor colorWithRed:0.4 green:0.4 blue:1 alpha:1];
+    
+    return _talbecell;
 }
 
 #pragma mark - 表格委托fangfa
 
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     _Cell=[tableView cellForRowAtIndexPath:indexPath];
-    if (_Cell.accessoryType==UITableViewCellAccessoryNone) {
-        
-        _Cell.accessoryType=UITableViewCellAccessoryCheckmark;
-    }
-    else if(_Cell.accessoryType==UITableViewCellAccessoryCheckmark){
+        if(_Cell.accessoryType==UITableViewCellAccessoryNone)
+        {
+            _Cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            [_addMusicArray addObject:_Cell.textLabel.text];
+             
+         }
+            else
+    
+        if(_Cell.accessoryType==UITableViewCellAccessoryCheckmark)
+        {
         _Cell.accessoryType=UITableViewCellAccessoryNone;
-    }
+           
+            [_addMusicArray removeObject:_Cell.textLabel.text];
+            
+        }
+    
+    
     _indexTemp3=indexPath;
 }
 
