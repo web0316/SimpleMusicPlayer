@@ -33,5 +33,5 @@
 
 -(NSString*)currentTableViewTitle;
 
-
 @end
+NSString *titlenew;

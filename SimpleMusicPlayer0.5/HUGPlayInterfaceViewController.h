@@ -54,6 +54,5 @@
 //-(void)sendPlayListName:(NSString*)name;
 //-(void)sendSongName:(NSString*)name;
 -(void)showView;
--(void)loadMusic:(NSString*)playList songName:(NSString*)songFileName type:(NSString*)type;
 
 @end

@@ -15,7 +15,7 @@
 @implementation HUGOtherListViewController
 
 #pragma mark - 按钮方法
-NSString *titlenew;
+
 
 -(void)btnPressRadomPlay:(UIButton*)sender
 {
